@@ -4,8 +4,9 @@ GIT_STATUS_PREFIX=${GIT_STATUS_PREFIX:-' '}
 GIT_STATUS_SUFIX=${GIT_STATUS_SUFIX:-''}
 
 GIT_STATUS_SYMBOL=${GIT_STATUS_SYMBOL:-''}
-GIT_STATUS_UNTRACKED="${GIT_STATUS_UNTRACKED="?"}"
+GIT_STATUS_MODIFIEED="${GIT_STATUS_MODIFIEED="±"}"
 GIT_STATUS_ADDED="${GIT_STATUS_ADDED="+"}"
+GIT_STATUS_DELETED="${GIT_STATUS_DELETED="-"}"
 GIT_STATUS_STAGED="${GIT_STATUS_STAGED="▸"}"
 GIT_STATUS_AHEAD="${GIT_STATUS_AHEAD="⇡"}"
 GIT_STATUS_BEHIND="${GIT_STATUS_BEHIND="⇣"}"
@@ -44,14 +45,14 @@ _git-info() {
     git_branch=" ${ref#refs/heads/}"
   fi
 
-  git_untracked_number=$(echo "$INDEX" | command grep -E '^[ MARC]M ' | wc -l)
-  if [[ "$git_untracked_number" == 0 ]]; then
-      git_untracked=''
+  git_modified_number=$(echo "$INDEX" | command grep -E '^[ MARC]M ' | wc -l)
+  if [[ "$git_modified_number" == 0 ]]; then
+      git_modified=''
   else
     if [[ $CLICOLOR = 1 ]]; then
-      git_untracked=" %{$fg_bold[magenta]%}${GIT_STATUS_UNTRACKED}${git_untracked_number}%{$reset_color%}"
+      git_modified=" %{$fg_bold[magenta]%}${GIT_STATUS_MODIFIEED}${git_modified_number}%{$reset_color%}"
     else
-      git_untracked=" ${GIT_STATUS_UNTRACKED}${git_untracked_number}"
+      git_modified=" ${GIT_STATUS_MODIFIEED}${git_modified_number}"
     fi
   fi
 
@@ -60,9 +61,20 @@ _git-info() {
       git_added=''
   else
     if [[ $CLICOLOR = 1 ]]; then
-      git_added=" %{$fg_bold[red]%}${GIT_STATUS_ADDED}${git_added_number}%{$reset_color%}"
+      git_added=" %{$fg_bold[blue]%}${GIT_STATUS_ADDED}${git_added_number}%{$reset_color%}"
     else
       git_added=" ${GIT_STATUS_ADDED}${git_added_number}"
+    fi
+  fi
+
+  git_deleted_number=$(echo "$INDEX" | command grep -E '^[ MARC]D ' | wc -l)
+  if [[ "$git_deleted_number" == 0 ]]; then
+      git_deleted=''
+  else
+    if [[ $CLICOLOR = 1 ]]; then
+      git_deleted=" %{$fg_bold[red]%}${GIT_STATUS_DELETED}${git_deleted_number}%{$reset_color%}"
+    else
+      git_deleted=" ${GIT_STATUS_DELETED}${git_deleted_number}"
     fi
   fi
 
@@ -99,7 +111,7 @@ _git-info() {
     fi
   fi
 
-  echo "$git_status$git_branch$git_untracked$git_added$git_staged$git_ahead$git_behind"
+  echo "$git_status$git_branch$git_modified$git_added$git_deleted$git_staged$git_ahead$git_behind"
   
 }
 
