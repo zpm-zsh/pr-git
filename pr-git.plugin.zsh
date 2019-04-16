@@ -1,28 +1,39 @@
 #!/usr/bin/env zsh
 
-GIT_PREFIX=${GIT_PREFIX:-' '}
-GIT_SUFIX=${GIT_SUFIX:-''}
+GIT_STATUS_PREFIX=${GIT_STATUS_PREFIX:-' '}
+GIT_STATUS_SUFIX=${GIT_STATUS_SUFIX:-''}
 
-GIT_SYMBOL=${GIT_SYMBOL:-''}
+GIT_STATUS_SYMBOL=${GIT_STATUS_SYMBOL:-''}
+GIT_STATUS_UNTRACKED="${GIT_STATUS_UNTRACKED="?"}"
+GIT_STATUS_ADDED="${GIT_STATUS_ADDED="+"}"
+GIT_STATUS_STAGED="${GIT_STATUS_STAGED="▸"}"
+GIT_STATUS_AHEAD="${GIT_STATUS_AHEAD="⇡"}"
+GIT_STATUS_BEHIND="${GIT_STATUS_BEHIND="⇣"}"
 
 
+# GIT_STATUS_MODIFIED="${GIT_STATUS_MODIFIED="!"}"
+# GIT_STATUS_RENAMED="${GIT_STATUS_RENAMED="»"}"
+# GIT_STATUS_DELETED="${GIT_STATUS_DELETED="✘"}"
+# GIT_STATUS_STASHED="${GIT_STATUS_STASHED="$"}"
+# GIT_STATUS_UNMERGED="${GIT_STATUS_UNMERGED="="}"
+# GIT_STATUS_DIVERGED="${GIT_STATUS_DIVERGED="⇕"}"
 
 _git-info() {
   INDEX=$(command git status --porcelain -b 2> /dev/null)
-
+  INDEX_STAGED=$(command git diff --staged --name-status 2> /dev/null)
 
   git_changes=$(echo "$INDEX" | wc -l 2>/dev/null)
   if [[ $CLICOLOR = 1 ]]; then
     if [[ "$git_changes" > "1" ]]; then
-      git_status="%{$fg_bold[red]%}$GIT_SYMBOL%{$reset_color%}"
+      git_status="%{$fg_bold[red]%}$GIT_STATUS_SYMBOL%{$reset_color%}"
     else
-      git_status="%{$fg_bold[green]%}$GIT_SYMBOL%{$reset_color%}"
+      git_status="%{$fg_bold[green]%}$GIT_STATUS_SYMBOL%{$reset_color%}"
     fi
   else
     if [[ "$git_changes" > "1" ]]; then
-      git_status="-$GIT_SYMBOL"
+      git_status="-$GIT_STATUS_SYMBOL"
     else
-      git_status="+$GIT_SYMBOL"
+      git_status="+$GIT_STATUS_SYMBOL"
     fi
   fi
 
@@ -38,9 +49,9 @@ _git-info() {
       git_untracked=''
   else
     if [[ $CLICOLOR = 1 ]]; then
-      git_untracked=" %{$fg_bold[magenta]%}?${git_untracked_number}%{$reset_color%}"
+      git_untracked=" %{$fg_bold[magenta]%}${GIT_STATUS_UNTRACKED}${git_untracked_number}%{$reset_color%}"
     else
-      git_untracked=" ?${git_untracked_number}"
+      git_untracked=" ${GIT_STATUS_UNTRACKED}${git_untracked_number}"
     fi
   fi
 
@@ -49,9 +60,20 @@ _git-info() {
       git_added=''
   else
     if [[ $CLICOLOR = 1 ]]; then
-      git_added=" %{$fg_bold[red]%}+${git_added_number}%{$reset_color%}"
+      git_added=" %{$fg_bold[red]%}${GIT_STATUS_ADDED}${git_added_number}%{$reset_color%}"
     else
-      git_added=" +${git_added_number}"
+      git_added=" ${GIT_STATUS_ADDED}${git_added_number}"
+    fi
+  fi
+
+  git_staged_number=$(echo "$INDEX_STAGED" | command grep -E '^[ MARC]M ' | wc -l)
+  if [[ "$git_staged_number" == 0 ]]; then
+      git_staged=''
+  else
+    if [[ $CLICOLOR = 1 ]]; then
+      git_staged=" %{$fg_bold[red]%}${GIT_STATUS_STAGED}${git_staged_number}%{$reset_color%}"
+    else
+      git_staged=" ${GIT_STATUS_STAGED}${git_staged_number}"
     fi
   fi
 
@@ -60,9 +82,9 @@ _git-info() {
       git_ahead=''
   else
     if [[ $CLICOLOR = 1 ]]; then
-      git_ahead=" %{$fg_bold[blue]%}⇡${git_ahead_number}%{$reset_color%}"
+      git_ahead=" %{$fg_bold[blue]%}${GIT_STATUS_AHEAD}${git_ahead_number}%{$reset_color%}"
     else
-      git_ahead=" ⇡${git_ahead_number}"
+      git_ahead=" ${GIT_STATUS_AHEAD}${git_ahead_number}"
     fi
   fi
 
@@ -71,9 +93,9 @@ _git-info() {
       git_behind=''
   else
     if [[ $CLICOLOR = 1 ]]; then
-      git_behind=" %{$fg_bold[cyan]%}⇣${git_behind_number}%{$reset_color%}"
+      git_behind=" %{$fg_bold[cyan]%}${GIT_STATUS_BEHIND}${git_behind_number}%{$reset_color%}"
     else
-      git_behind=" ⇣${git_behind_number}"
+      git_behind=" ${GIT_STATUS_BEHIND}${git_behind_number}"
     fi
   fi
 
@@ -84,7 +106,7 @@ _git-info() {
 _git_prompt() {
   if [ "$(command git config --get --bool oh-my-zsh.hide-status 2>/dev/null)" != "true" ] \
   && _ZPM-recursive-exist .git > /dev/null 2>&1; then
-    pr_git="$GIT_PREFIX$(_git-info)$GIT_SUFIX"
+    pr_git="$GIT_STATUS_PREFIX$(_git-info)$GIT_STATUS_SUFIX"
   else
     pr_git=""
   fi
