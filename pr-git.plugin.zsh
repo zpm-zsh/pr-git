@@ -99,7 +99,7 @@ _git-info() {
     fi
   fi
 
-  echo "$git_status$git_branch$git_untracked$git_added$git_ahead$git_behind"
+  echo "$git_status$git_branch$git_untracked$git_added$git_staged_number$git_ahead$git_behind"
   
 }
 
