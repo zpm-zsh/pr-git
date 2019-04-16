@@ -19,6 +19,8 @@ GIT_STATUS_BEHIND="${GIT_STATUS_BEHIND="⇣"}"
 # GIT_STATUS_UNMERGED="${GIT_STATUS_UNMERGED="="}"
 # GIT_STATUS_DIVERGED="${GIT_STATUS_DIVERGED="⇕"}"
 
+DEPENDENCES_ZSH+=( zpm-zsh/zsh-helpers )
+
 _git-info() {
   INDEX=$(command git status --porcelain -b 2> /dev/null)
   INDEX_STAGED=$(command git diff --staged --name-status 2> /dev/null)
