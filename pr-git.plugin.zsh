@@ -26,11 +26,11 @@ _git-info() {
     fi
   fi
 
-  ref=$(command git symbolic-ref HEAD 2>/dev/null)
+  git_branch_name=$(echo "$INDEX" | sed -n 's/.*\/\(\w\+\).*/\1/p' )
   if [[ $CLICOLOR = 1 ]]; then
-    git_branch=" %{$fg_bold[yellow]%}${ref#refs/heads/}%{$reset_color%}"
+    git_branch=" %{$fg_bold[yellow]%}${git_branch_name}%{$reset_color%}"
   else
-    git_branch=" ${ref#refs/heads/}"
+    git_branch=" ${git_branch_name}"
   fi
 
   git_untracked_number=$(echo "$INDEX" | command grep -E '^[ MARC]M ' | wc -l)
@@ -55,7 +55,29 @@ _git-info() {
     fi
   fi
 
-  echo "$git_status$git_branch$git_untracked$git_added"
+  git_ahead_number=$(echo "$INDEX" | sed -n 's/.*ahead \([\0-9]\+\).*/\1/p' 2>/dev/null)
+  if [[ -z "$git_ahead_number" ]]; then
+      git_ahead=''
+  else
+    if [[ $CLICOLOR = 1 ]]; then
+      git_ahead=" %{$fg_bold[blue]%}⇡${git_ahead_number}%{$reset_color%}"
+    else
+      git_ahead=" ⇡${git_ahead_number}"
+    fi
+  fi
+
+  git_behind_number=$(echo "$INDEX" | sed -n 's/.*behind \([\0-9]\+\).*/\1/p' 2>/dev/null)
+  if [[ -z "$git_behind_number" ]]; then
+      git_behind=''
+  else
+    if [[ $CLICOLOR = 1 ]]; then
+      git_behind=" %{$fg_bold[cyan]%}⇣${git_behind_number}%{$reset_color%}"
+    else
+      git_behind=" ⇣${git_behind_number}"
+    fi
+  fi
+
+  echo "$git_status$git_branch$git_untracked$git_added$git_ahead$git_behind"
   
 }
 
