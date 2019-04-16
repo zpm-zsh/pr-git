@@ -8,6 +8,9 @@ Plugin will create a global variable that can be displayed in prompts.
 PROMPT='$pr_git ...REST OF PROMPT'
 ```
 
+#### Screenshot
+![Screenshot](./image.png)
+
 This plugin made to be fast. It runs in background and update information only if need.
 
 ## Installation
