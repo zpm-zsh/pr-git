@@ -71,7 +71,7 @@ _git-info() {
       git_staged=''
   else
     if [[ $CLICOLOR = 1 ]]; then
-      git_staged=" %{$fg_bold[red]%}${GIT_STATUS_STAGED}${git_staged_number}%{$reset_color%}"
+      git_staged=" %{$fg_bold[cyan]%}${GIT_STATUS_STAGED}${git_staged_number}%{$reset_color%}"
     else
       git_staged=" ${GIT_STATUS_STAGED}${git_staged_number}"
     fi
@@ -99,7 +99,7 @@ _git-info() {
     fi
   fi
 
-  echo "$git_status$git_branch$git_untracked$git_added$git_staged_number$git_ahead$git_behind"
+  echo "$git_status$git_branch$git_untracked$git_added$git_staged$git_ahead$git_behind"
   
 }
 
