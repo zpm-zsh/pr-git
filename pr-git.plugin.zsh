@@ -117,7 +117,7 @@ _git-info() {
 
 _git_prompt() {
   if [ "$(command git config --get --bool oh-my-zsh.hide-status 2>/dev/null)" != "true" ] \
-  && _ZPM-recursive-exist .git > /dev/null 2>&1; then
+  && is-recursive-exist .git > /dev/null 2>&1; then
     pr_git="$GIT_STATUS_PREFIX$(_git-info)$GIT_STATUS_SUFIX"
   else
     pr_git=""
