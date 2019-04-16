@@ -26,11 +26,11 @@ _git-info() {
     fi
   fi
 
-  git_branch_name=$(echo "$INDEX" | sed -n 's/.*\/\(\w\+\).*/\1/p' )
+  ref=$(command git symbolic-ref HEAD 2>/dev/null)
   if [[ $CLICOLOR = 1 ]]; then
-    git_branch=" %{$fg_bold[yellow]%}${git_branch_name}%{$reset_color%}"
+    git_branch=" %{$fg_bold[yellow]%}${ref#refs/heads/}%{$reset_color%}"
   else
-    git_branch=" ${git_branch_name}"
+    git_branch=" ${ref#refs/heads/}"
   fi
 
   git_untracked_number=$(echo "$INDEX" | command grep -E '^[ MARC]M ' | wc -l)
