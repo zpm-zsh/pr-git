@@ -66,7 +66,7 @@ _git-info() {
     fi
   fi
 
-  git_staged_number=$(echo "$INDEX_STAGED" | command grep -E '^[ MARC]M ' | wc -l)
+  git_staged_number=$(echo "$INDEX_STAGED" | command grep -E '^[ MARC]' | wc -l)
   if [[ "$git_staged_number" == 0 ]]; then
       git_staged=''
   else
