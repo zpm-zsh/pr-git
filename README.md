@@ -1,6 +1,6 @@
 # Plugin for ZSH who display Git info
 
-Plugin will create a global variable that can be displayed in prompts. 
+Plugin creates a global variable with `git` status information that can be displayed in prompts.
 
 ### Example
 
@@ -15,7 +15,10 @@ This plugin made to be fast. It runs in background and update information only i
 
 ## Installation
 
-### This plugion require [zsh-helpres](https://github.com/zpm-zsh/zsh-helpers)
+### This plugin depends on [zsh-helpres](https://github.com/zpm-zsh/helpers)
+
+If you don't use [zpm](https://github.com/zpm-zsh/zpm), install it manually and activate it before this plugin. 
+If you use zpm you don’t need to do anything
 
 ### If you use [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)
 
