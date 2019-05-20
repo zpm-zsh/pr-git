@@ -19,7 +19,11 @@ GIT_STATUS_BEHIND="${GIT_STATUS_BEHIND="⇣"}"
 # GIT_STATUS_UNMERGED="${GIT_STATUS_UNMERGED="="}"
 # GIT_STATUS_DIVERGED="${GIT_STATUS_DIVERGED="⇕"}"
 
-DEPENDENCES_ZSH+=( zpm-zsh/helpers )
+DEPENDENCES_ZSH+=( zpm-zsh/helpers zpm-zsh/background_jobs )
+
+if which zpm >/dev/null; then
+  zpm zpm-zsh/helpers zpm-zsh/background_jobs
+fi
 
 _git-info() {
   INDEX=$(command git status --porcelain -b 2> /dev/null)
@@ -127,5 +131,6 @@ _git_prompt() {
   fi
 }
 
-background_functions+=(_git_prompt)
+_git_prompt
 chpwd_functions+=(_git_prompt)
+background_functions+=(_git_prompt)
