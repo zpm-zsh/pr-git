@@ -12,13 +12,6 @@ GIT_STATUS_AHEAD="${GIT_STATUS_AHEAD="⇡"}"
 GIT_STATUS_BEHIND="${GIT_STATUS_BEHIND="⇣"}"
 
 
-# GIT_STATUS_MODIFIED="${GIT_STATUS_MODIFIED="!"}"
-# GIT_STATUS_RENAMED="${GIT_STATUS_RENAMED="»"}"
-# GIT_STATUS_DELETED="${GIT_STATUS_DELETED="✘"}"
-# GIT_STATUS_STASHED="${GIT_STATUS_STASHED="$"}"
-# GIT_STATUS_UNMERGED="${GIT_STATUS_UNMERGED="="}"
-# GIT_STATUS_DIVERGED="${GIT_STATUS_DIVERGED="⇕"}"
-
 DEPENDENCES_ZSH+=( zpm-zsh/helpers zpm-zsh/background_jobs )
 
 if which zpm >/dev/null; then
@@ -125,7 +118,6 @@ _git_prompt() {
   if [ "$(command git config --get --bool oh-my-zsh.hide-status 2>/dev/null)" != "true" ] \
   && is-recursive-exist .git > /dev/null 2>&1; then
     pr_git="$GIT_STATUS_PREFIX$(_git-info)$GIT_STATUS_SUFIX"
-    zle && zle reset-prompt
   else
     pr_git=""
   fi
