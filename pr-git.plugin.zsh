@@ -121,9 +121,11 @@ _git_prompt() {
   if [ "$(command git config --get --bool oh-my-zsh.hide-status 2>/dev/null)" != "true" ] \
   && is-recursive-exist .git > /dev/null 2>&1; then
     pr_git="$GIT_STATUS_PREFIX$(_git-info)$GIT_STATUS_SUFIX"
+    zle && zle reset-prompt
   else
     pr_git=""
   fi
 }
 
-precmd_functions+=(_git_prompt)
+background_functions+=(_git_prompt)
+chpwd_functions+=(_git_prompt)
