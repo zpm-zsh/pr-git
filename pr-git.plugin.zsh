@@ -128,5 +128,5 @@ _git_prompt() {
 }
 
 _git_prompt
-chpwd_functions+=(_git_prompt)
+precmd_functions+=(_git_prompt)
 background_functions+=(_git_prompt)
