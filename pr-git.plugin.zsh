@@ -12,7 +12,7 @@ GIT_STATUS_AHEAD="${GIT_STATUS_AHEAD="⇡"}"
 GIT_STATUS_BEHIND="${GIT_STATUS_BEHIND="⇣"}"
 
 
-DEPENDENCES_ZSH+=( zpm-zsh/helpers zpm-zsh/background_jobs )
+DEPENDENCES_ZSH+=( zpm-zsh/helpers zpm-zsh/background-functions )
 
 if which zpm >/dev/null; then
   zpm zpm-zsh/helpers zpm-zsh/background_jobs
