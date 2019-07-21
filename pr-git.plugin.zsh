@@ -127,5 +127,5 @@ _git_prompt() {
 }
 
 _git_prompt
-add-hook precmd _git_prompt
-add-hook background _git_prompt
+add-zsh-hook precmd _git_prompt
+add-zsh-hook background _git_prompt
