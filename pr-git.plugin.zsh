@@ -114,7 +114,7 @@ _git-info() {
 }
 
 _git_prompt() {
-  if is-recursive-exist .git && \
+  if is-recursive-exist .git >/dev/null && \
     ! command git config --get --bool oh-my-zsh.hide-status;
   then
     pr_git_old="$pr_git"
