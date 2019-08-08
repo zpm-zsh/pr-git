@@ -23,91 +23,55 @@ _git-info() {
   INDEX_STAGED=$(command git diff --staged --name-status 2> /dev/null)
   
   git_changes=$(echo "$INDEX" | wc -l 2>/dev/null)
-  if [[ $CLICOLOR = 1 ]]; then
-    if [[ "$git_changes" > "1" ]]; then
-      git_status="%{$c[red]$c_dim%}$GIT_STATUS_SYMBOL%{$c_reset%}"
-    else
-      git_status="%{$c[green]$c_dim%}$GIT_STATUS_SYMBOL%{$c_reset%}"
-    fi
+  if [[ "$git_changes" > "1" ]]; then
+    git_status="%{$c[red]$c_dim%}$GIT_STATUS_SYMBOL%{$c_reset%}"
   else
-    if [[ "$git_changes" > "1" ]]; then
-      git_status="-$GIT_STATUS_SYMBOL"
-    else
-      git_status="+$GIT_STATUS_SYMBOL"
-    fi
+    git_status="%{$c[green]$c_dim%}$GIT_STATUS_SYMBOL%{$c_reset%}"
   fi
   
   ref=$(command git symbolic-ref HEAD 2>/dev/null)
-  if [[ $CLICOLOR = 1 ]]; then
-    git_branch=" %{$c[yellow]$c_bold%}${ref#refs/heads/}%{$c_reset%}"
-  else
-    git_branch=" ${ref#refs/heads/}"
-  fi
+  git_branch=" %{$c[yellow]$c_bold%}${ref#refs/heads/}%{$c_reset%}"
   
   git_modified_number=$(echo "$INDEX" | command grep -E '^[ MARC]M ' | wc -l)
   if [[ "$git_modified_number" == 0 ]]; then
     git_modified=''
   else
-    if [[ $CLICOLOR = 1 ]]; then
-      git_modified=" %{$c[magenta]$c_dim$c_bold%}${GIT_STATUS_MODIFIEED}%{$c_reset$c[magenta]$c_bold%}${git_modified_number}%{$c_reset%}"
-    else
-      git_modified=" ${GIT_STATUS_MODIFIEED}${git_modified_number}"
-    fi
+    git_modified=" %{$c[magenta]$c_dim$c_bold%}${GIT_STATUS_MODIFIEED}%{$c_reset$c[magenta]$c_bold%}${git_modified_number}%{$c_reset%}"
   fi
   
   git_added_number=$(echo "$INDEX" | command grep -E '^\?\? ' | wc -l)
   if [[ "$git_added_number" == 0 ]]; then
     git_added=''
   else
-    if [[ $CLICOLOR = 1 ]]; then
-      git_added=" %{$c[blue]$c_dim$c_bold%}${GIT_STATUS_ADDED}%{$c_reset$c[blue]$c_bold%}${git_added_number}%{$c_reset%}"
-    else
-      git_added=" ${GIT_STATUS_ADDED}${git_added_number}"
-    fi
+    git_added=" %{$c[blue]$c_dim$c_bold%}${GIT_STATUS_ADDED}%{$c_reset$c[blue]$c_bold%}${git_added_number}%{$c_reset%}"
   fi
   
   git_deleted_number=$(echo "$INDEX" | command grep -E '^[ MARC]D ' | wc -l)
   if [[ "$git_deleted_number" == 0 ]]; then
     git_deleted=''
   else
-    if [[ $CLICOLOR = 1 ]]; then
-      git_deleted=" %{$c[red]$c_dim$c_bold%}${GIT_STATUS_DELETED}%{$c_reset$c[red]$c_bold%}${git_deleted_number}%{$c_reset%}"
-    else
-      git_deleted=" ${GIT_STATUS_DELETED}${git_deleted_number}"
-    fi
+    git_deleted=" %{$c[red]$c_dim$c_bold%}${GIT_STATUS_DELETED}%{$c_reset$c[red]$c_bold%}${git_deleted_number}%{$c_reset%}"
   fi
   
   git_staged_number=$(echo "$INDEX_STAGED" | command grep -E '^[ MARC]' | wc -l)
   if [[ "$git_staged_number" == 0 ]]; then
     git_staged=''
   else
-    if [[ $CLICOLOR = 1 ]]; then
-      git_staged=" %{$c[cyan]$c_dim$c_bold%}${GIT_STATUS_STAGED}%{$c_reset$c[cyan]$c_bold%}${git_staged_number}%{$c_reset%}"
-    else
-      git_staged=" ${GIT_STATUS_STAGED}${git_staged_number}"
-    fi
+    git_staged=" %{$c[cyan]$c_dim$c_bold%}${GIT_STATUS_STAGED}%{$c_reset$c[cyan]$c_bold%}${git_staged_number}%{$c_reset%}"
   fi
   
   git_ahead_number=$(echo "$INDEX" | sed -n 's/.*ahead \([\0-9]\+\).*/\1/p' 2>/dev/null)
   if [[ -z "$git_ahead_number" ]]; then
     git_ahead=''
   else
-    if [[ $CLICOLOR = 1 ]]; then
-      git_ahead=" %{$c[blue]$c_dim$c_bold%}${GIT_STATUS_AHEAD}%{$c_reset$c[blue]$c_bold%}${git_ahead_number}%{$c_reset%}"
-    else
-      git_ahead=" ${GIT_STATUS_AHEAD}${git_ahead_number}"
-    fi
+    git_ahead=" %{$c[blue]$c_dim$c_bold%}${GIT_STATUS_AHEAD}%{$c_reset$c[blue]$c_bold%}${git_ahead_number}%{$c_reset%}"
   fi
   
   git_behind_number=$(echo "$INDEX" | sed -n 's/.*behind \([\0-9]\+\).*/\1/p' 2>/dev/null)
   if [[ -z "$git_behind_number" ]]; then
     git_behind=''
   else
-    if [[ $CLICOLOR = 1 ]]; then
-      git_behind=" %{$c[cyan]$c_dim$c_bold%}${GIT_STATUS_BEHIND}%{$c_reset$c[cyan]$c_bold%}${git_behind_number}%{$c_reset%}"
-    else
-      git_behind=" ${GIT_STATUS_BEHIND}${git_behind_number}"
-    fi
+    git_behind=" %{$c[cyan]$c_dim$c_bold%}${GIT_STATUS_BEHIND}%{$c_reset$c[cyan]$c_bold%}${git_behind_number}%{$c_reset%}"
   fi
   
   echo "$git_status$git_branch$git_modified$git_added$git_deleted$git_staged$git_ahead$git_behind"
@@ -115,7 +79,7 @@ _git-info() {
 
 _git_prompt() {
   if is-recursive-exist .git >/dev/null && \
-    ! command git config --get --bool oh-my-zsh.hide-status;
+  ! command git config --get --bool oh-my-zsh.hide-status;
   then
     pr_git_old="$pr_git"
     pr_git="$GIT_STATUS_PREFIX$(_git-info 2>/dev/null)$GIT_STATUS_SUFIX"
