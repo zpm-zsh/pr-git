@@ -19,45 +19,45 @@ if command -v zpm >/dev/null; then
 fi
 
 _git-info() {
-  INDEX=$(command git status --porcelain -b 2> /dev/null)
-  INDEX_STAGED=$(command git diff --staged --name-status 2> /dev/null)
+  setopt extendedglob
   
-  git_changes=$(echo "$INDEX" | wc -l 2>/dev/null)
-  if [[ "$git_changes" > "1" ]]; then
+  declare -a INDEX; INDEX=( ${(f)"$(command git status --porcelain -b 2> /dev/null)"} )
+  local REF=$(command git symbolic-ref HEAD 2>/dev/null)
+
+  if [[ "${#INDEX}" != "1" ]]; then
     git_status="%{$c[red]$c_dim%}$GIT_STATUS_SYMBOL%{$c_reset%}"
   else
     git_status="%{$c[green]$c_dim%}$GIT_STATUS_SYMBOL%{$c_reset%}"
   fi
   
-  ref=$(command git symbolic-ref HEAD 2>/dev/null)
-  git_branch=" %{$c[yellow]$c_bold%}${ref#refs/heads/}%{$c_reset%}"
+  git_branch=" %{$c[yellow]$c_bold%}${REF#refs/heads/}%{$c_reset%}"
   
-  git_modified_number=$(echo "$INDEX" | command grep -E '^[ MARC]M ' | wc -l)
-  if [[ "$git_modified_number" == 0 ]]; then
+  declare -a git_modified; git_modified=( ${(M)INDEX:#[ MARC]M\ *} )
+  if [[ "${#git_modified}" == 0 ]]; then
     git_modified=''
   else
-    git_modified=" %{$c[magenta]$c_dim$c_bold%}${GIT_STATUS_MODIFIEED}%{$c_reset$c[magenta]$c_bold%}${git_modified_number}%{$c_reset%}"
+    git_modified=" %{$c[magenta]$c_dim$c_bold%}${GIT_STATUS_MODIFIEED}%{$c_reset$c[magenta]$c_bold%}${#git_modified}%{$c_reset%}"
   fi
   
-  git_added_number=$(echo "$INDEX" | command grep -E '^\?\? ' | wc -l)
-  if [[ "$git_added_number" == 0 ]]; then
+  declare -a git_added; git_added=( ${(M)INDEX:#\?\?\ *} )
+  if [[ "${#git_added}" == 0 ]]; then
     git_added=''
   else
-    git_added=" %{$c[blue]$c_dim$c_bold%}${GIT_STATUS_ADDED}%{$c_reset$c[blue]$c_bold%}${git_added_number}%{$c_reset%}"
+    git_added=" %{$c[blue]$c_dim$c_bold%}${GIT_STATUS_ADDED}%{$c_reset$c[blue]$c_bold%}${#git_added}%{$c_reset%}"
   fi
   
-  git_deleted_number=$(echo "$INDEX" | command grep -E '^[ MARC]D ' | wc -l)
-  if [[ "$git_deleted_number" == 0 ]]; then
+  declare -a git_deleted; git_deleted=( ${(M)INDEX:#[ MARC]D\ *} )
+  if [[ "${#git_deleted}" == 0 ]]; then
     git_deleted=''
   else
-    git_deleted=" %{$c[red]$c_dim$c_bold%}${GIT_STATUS_DELETED}%{$c_reset$c[red]$c_bold%}${git_deleted_number}%{$c_reset%}"
+    git_deleted=" %{$c[red]$c_dim$c_bold%}${GIT_STATUS_DELETED}%{$c_reset$c[red]$c_bold%}${#git_deleted}%{$c_reset%}"
   fi
   
-  git_staged_number=$(echo "$INDEX_STAGED" | command grep -E '^[ MARC]' | wc -l)
-  if [[ "$git_staged_number" == 0 ]]; then
+  declare -a git_staged; git_staged=( ${(M)INDEX:#^[ MARC]*} )
+  if [[ "${#git_staged}" == 0 ]]; then
     git_staged=''
   else
-    git_staged=" %{$c[cyan]$c_dim$c_bold%}${GIT_STATUS_STAGED}%{$c_reset$c[cyan]$c_bold%}${git_staged_number}%{$c_reset%}"
+    git_staged=" %{$c[cyan]$c_dim$c_bold%}${GIT_STATUS_STAGED}%{$c_reset$c[cyan]$c_bold%}${#git_staged}%{$c_reset%}"
   fi
   
   git_ahead_number=$(echo "$INDEX" | sed -n 's/.*ahead \([\0-9]\+\).*/\1/p' 2>/dev/null)
