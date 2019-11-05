@@ -23,7 +23,7 @@ _git-info() {
   
   declare -a INDEX; INDEX=( ${(f)"$(command git status --porcelain -b 2> /dev/null)"} )
   local REF=$(command git symbolic-ref HEAD 2>/dev/null)
-
+  
   if [[ "${#INDEX}" != "1" ]]; then
     git_status="%{$c[red]$c_dim%}$GIT_STATUS_SYMBOL%{$c_reset%}"
   else
@@ -32,43 +32,43 @@ _git-info() {
   
   git_branch=" %{$c[yellow]$c_bold%}${REF#refs/heads/}%{$c_reset%}"
   
-  declare -a git_modified; git_modified=( ${(M)INDEX:#[ MARC]M\ *} )
-  if [[ "${#git_modified}" == 0 ]]; then
+  declare -a git_modified_number; git_modified_number=( ${(M)INDEX:#[ MARC]M\ *} )
+  if [[ "${#git_modified_number}" == 0 ]]; then
     git_modified=''
   else
-    git_modified=" %{$c[magenta]$c_dim$c_bold%}${GIT_STATUS_MODIFIEED}%{$c_reset$c[magenta]$c_bold%}${#git_modified}%{$c_reset%}"
+    git_modified=" %{$c[magenta]$c_dim$c_bold%}${GIT_STATUS_MODIFIEED}%{$c_reset$c[magenta]$c_bold%}${#git_modified_number}%{$c_reset%}"
   fi
   
-  declare -a git_added; git_added=( ${(M)INDEX:#\?\?\ *} )
-  if [[ "${#git_added}" == 0 ]]; then
+  declare -a git_added_number; git_added_number=( ${(M)INDEX:#\?\?\ *} )
+  if [[ "${#git_added_number}" == 0 ]]; then
     git_added=''
   else
-    git_added=" %{$c[blue]$c_dim$c_bold%}${GIT_STATUS_ADDED}%{$c_reset$c[blue]$c_bold%}${#git_added}%{$c_reset%}"
+    git_added=" %{$c[blue]$c_dim$c_bold%}${GIT_STATUS_ADDED}%{$c_reset$c[blue]$c_bold%}${#git_added_number}%{$c_reset%}"
   fi
   
-  declare -a git_deleted; git_deleted=( ${(M)INDEX:#[ MARC]D\ *} )
-  if [[ "${#git_deleted}" == 0 ]]; then
+  declare -a git_deleted_number; git_deleted_number=( ${(M)INDEX:#[ MARC]D\ *} )
+  if [[ "${#git_deleted_number}" == 0 ]]; then
     git_deleted=''
   else
-    git_deleted=" %{$c[red]$c_dim$c_bold%}${GIT_STATUS_DELETED}%{$c_reset$c[red]$c_bold%}${#git_deleted}%{$c_reset%}"
+    git_deleted=" %{$c[red]$c_dim$c_bold%}${GIT_STATUS_DELETED}%{$c_reset$c[red]$c_bold%}${#git_deleted_number}%{$c_reset%}"
   fi
   
-  declare -a git_staged; git_staged=( ${(M)INDEX:#^[ MARC]*} )
-  if [[ "${#git_staged}" == 0 ]]; then
+  declare -a git_staged_number; git_staged_number=( ${(M)INDEX:#^[ MARC]*} )
+  if [[ "${#git_staged_number}" == 0 ]]; then
     git_staged=''
   else
-    git_staged=" %{$c[cyan]$c_dim$c_bold%}${GIT_STATUS_STAGED}%{$c_reset$c[cyan]$c_bold%}${#git_staged}%{$c_reset%}"
+    git_staged=" %{$c[cyan]$c_dim$c_bold%}${GIT_STATUS_STAGED}%{$c_reset$c[cyan]$c_bold%}${#git_staged_number}%{$c_reset%}"
   fi
   
-  git_ahead_number=$(echo "$INDEX" | sed -n 's/.*ahead \([\0-9]\+\).*/\1/p' 2>/dev/null)
-  if [[ -z "$git_ahead_number" ]]; then
+  local git_ahead_number="${${INDEX[@]##*ahead\ }%%[\,\]]*}"
+  if [[ "$INDEX[@]" != *'ahead'* ]]; then
     git_ahead=''
   else
     git_ahead=" %{$c[blue]$c_dim$c_bold%}${GIT_STATUS_AHEAD}%{$c_reset$c[blue]$c_bold%}${git_ahead_number}%{$c_reset%}"
   fi
   
-  git_behind_number=$(echo "$INDEX" | sed -n 's/.*behind \([\0-9]\+\).*/\1/p' 2>/dev/null)
-  if [[ -z "$git_behind_number" ]]; then
+  local git_behind_number="${${INDEX[@]##*behind\ }%%[\,\]]*}"
+  if [[ "$INDEX[@]" != *"behind"* ]]; then
     git_behind=''
   else
     git_behind=" %{$c[cyan]$c_dim$c_bold%}${GIT_STATUS_BEHIND}%{$c_reset$c[cyan]$c_bold%}${git_behind_number}%{$c_reset%}"
