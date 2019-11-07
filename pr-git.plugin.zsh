@@ -53,7 +53,7 @@ _git-info() {
     git_deleted=" %{$c[red]$c_dim$c_bold%}${GIT_STATUS_DELETED}%{$c_reset$c[red]$c_bold%}${#git_deleted_number}%{$c_reset%}"
   fi
   
-  declare -a git_staged_number; git_staged_number=( ${(M)INDEX:#[ MARC]*} )
+  declare -a git_staged_number; git_staged_number=( ${(M)INDEX:#[MARC]*} )
   if [[ "${#git_staged_number}" == 0 ]]; then
     git_staged=''
   else
