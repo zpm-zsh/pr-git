@@ -15,7 +15,7 @@ GIT_STATUS_BEHIND="${GIT_STATUS_BEHIND="↓"}"
 DEPENDENCES_ZSH+=( zpm-zsh/helpers zpm-zsh/background zpm-zsh/colors )
 
 if command -v zpm >/dev/null; then
-  zpm zpm-zsh/helpers zpm-zsh/background zpm-zsh/colors
+  zpm zpm-zsh/helpers,inline zpm-zsh/background zpm-zsh/colors,inline
 fi
 
 _git-info() {
