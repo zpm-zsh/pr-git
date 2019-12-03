@@ -21,7 +21,7 @@ fi
 _git-info() {
   setopt extendedglob
   
-  declare -a INDEX; INDEX=( ${(f)"$(command git status --porcelain -b 2> /dev/null)"} )
+  declare -a INDEX; INDEX=( ${(f)"$(command git status --no-renames --ignore-submodules --no-ahead-behind --porcelain -b 2> /dev/null)"} )
   
   if [[ "${#INDEX}" != "1" ]]; then
     git_status="%{$c[red]$c_dim%}$GIT_STATUS_SYMBOL%{$c_reset%}"
