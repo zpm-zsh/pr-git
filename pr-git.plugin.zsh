@@ -22,7 +22,6 @@ _git-info() {
   setopt extendedglob
   
   declare -a INDEX; INDEX=( ${(f)"$(command git status --porcelain -b 2> /dev/null)"} )
-  local REF=$(command git symbolic-ref HEAD 2>/dev/null)
   
   if [[ "${#INDEX}" != "1" ]]; then
     git_status="%{$c[red]$c_dim%}$GIT_STATUS_SYMBOL%{$c_reset%}"
@@ -30,17 +29,17 @@ _git-info() {
     git_status="%{$c[green]$c_dim%}$GIT_STATUS_SYMBOL%{$c_reset%}"
   fi
   
-  git_branch=" %{$c[yellow]$c_bold%}${REF#refs/heads/}%{$c_reset%}"
+  git_branch=" %{$c[yellow]$c_bold%}${${INDEX[1]#\##\ *}%\.\.\.*}%{$c_reset%}"
   
   declare -a git_modified_number; git_modified_number=( ${(M)INDEX:#[ MARC]M\ *} )
-  if [[ "${#git_modified_number}" == 0 ]]; then
+  if [[ -z "${git_modified_number}" ]]; then
     git_modified=''
   else
     git_modified=" %{$c[magenta]$c_dim$c_bold%}${GIT_STATUS_MODIFIEED}%{$c_reset$c[magenta]$c_bold%}${#git_modified_number}%{$c_reset%}"
   fi
   
   declare -a git_added_number; git_added_number=( ${(M)INDEX:#\?\?\ *} )
-  if [[ "${#git_added_number}" == 0 ]]; then
+  if [[ -z "${git_added_number}" ]]; then
     git_added=''
   else
     git_added=" %{$c[blue]$c_dim$c_bold%}${GIT_STATUS_ADDED}%{$c_reset$c[blue]$c_bold%}${#git_added_number}%{$c_reset%}"
@@ -54,7 +53,7 @@ _git-info() {
   fi
   
   declare -a git_staged_number; git_staged_number=( ${(M)INDEX:#[MARC]*} )
-  if [[ "${#git_staged_number}" == 0 ]]; then
+  if [[ -z "${git_staged_number}" ]]; then
     git_staged=''
   else
     git_staged=" %{$c[cyan]$c_dim$c_bold%}${GIT_STATUS_STAGED}%{$c_reset$c[cyan]$c_bold%}${#git_staged_number}%{$c_reset%}"
