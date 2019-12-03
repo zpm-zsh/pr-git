@@ -47,7 +47,7 @@ _git-info() {
   fi
   
   declare -a git_deleted_number; git_deleted_number=( ${(M)INDEX:#[ MARC]D\ *} )
-  if [[ "${#git_deleted_number}" == 0 ]]; then
+  if [[ -z "${git_deleted_number}" ]]; then
     git_deleted=''
   else
     git_deleted=" %{$c[red]$c_dim$c_bold%}${GIT_STATUS_DELETED}%{$c_reset$c[red]$c_bold%}${#git_deleted_number}%{$c_reset%}"
