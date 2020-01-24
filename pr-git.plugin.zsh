@@ -39,7 +39,7 @@ _git-info() {
 
   setopt extendedglob
   
-  command git-status --whoami grisa --pwd-dir . --refresh-sec 3 2> /dev/null | read -A __CURRENT_GIT_STATUS
+  command git-status --whoami $USER --pwd-dir . --refresh-sec 3 2> /dev/null | read -A __CURRENT_GIT_STATUS
 
   GIT_BRANCH=$__CURRENT_GIT_STATUS[1]
   GIT_AHEAD=$__CURRENT_GIT_STATUS[2]
