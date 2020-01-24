@@ -31,6 +31,11 @@ if (( ! $+commands[git-status] )); then
 fi
 
 _git-info() {
+  if (( ! $+commands[git-status] )); then
+    echo Please, install git-status
+    return
+  fi
+
   setopt extendedglob
   
   command git-status --whoami grisa --pwd-dir . --refresh-sec 3 2> /dev/null | read -A __CURRENT_GIT_STATUS
