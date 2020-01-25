@@ -22,18 +22,9 @@ if (( $+functions[zpm] )); then
   zpm zpm-zsh/helpers,inline zpm-zsh/background,inline zpm-zsh/colors,inline
 fi
 
-if (( ! $+commands[git-status] )); then
-  (
-    cd "${base_dir}/zsh-git-cal-status-cpp/"
-    make
-    cp git-status.bin ../bin/git-status
-    echo Please, restart shell
-  )
-fi
-
 _git-info() {
   if (( ! $+commands[git-status] )); then
-    echo Please, install git-status
+    echo Please, install git-status from https://gitlab.com/cosurgi/zsh-git-cal-status-cpp
     return
   fi
 
