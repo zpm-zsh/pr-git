@@ -3,15 +3,24 @@
 0="${${(M)0:#/*}:-$PWD/$0}"
 base_dir=${0:h}
 
+typeset -g GIT_STATUS_PREFIX
 GIT_STATUS_PREFIX=${GIT_STATUS_PREFIX:-' '}
+typeset -g GIT_STATUS_SUFIX
 GIT_STATUS_SUFIX=${GIT_STATUS_SUFIX:-''}
 
+typeset -g GIT_STATUS_SYMBOL
 GIT_STATUS_SYMBOL=${GIT_STATUS_SYMBOL:-''}
+typeset -g GIT_STATUS_STAGED
 GIT_STATUS_STAGED="${GIT_STATUS_STAGED="→"}" 
+typeset -g GIT_STATUS_CONFLICTS
 GIT_STATUS_CONFLICTS="${GIT_STATUS_CONFLICTS="≠"}"
+typeset -g GIT_STATUS_CHANGED
 GIT_STATUS_CHANGED="${GIT_STATUS_CHANGED="±"}" 
+typeset -g GIT_STATUS_BEHIND
 GIT_STATUS_BEHIND="${GIT_STATUS_BEHIND="↓"}" 
+typeset -g GIT_STATUS_AHEAD
 GIT_STATUS_AHEAD="${GIT_STATUS_AHEAD="↑"}"
+typeset -g GIT_STATUS_UNTRACKED
 GIT_STATUS_UNTRACKED="${GIT_STATUS_UNTRACKED="+"}"
 
 
@@ -28,7 +37,7 @@ _git-info() {
     return
   fi
 
-  setopt extendedglob
+  # setopt extendedglob
   
   command git-status --whoami $USER --pwd-dir . --refresh-sec 3 2> /dev/null | read -A __CURRENT_GIT_STATUS
 
@@ -91,6 +100,8 @@ _git-info() {
 }
 
 _git_prompt() {
+  typeset -g pr_git
+  typeset -g pr_git_old
   if is-recursive-exist .git; then
     pr_git_old="$pr_git"
     pr_git="$GIT_STATUS_PREFIX$(_git-info 2>/dev/null)$GIT_STATUS_SUFIX"
