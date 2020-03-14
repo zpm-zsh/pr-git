@@ -14,6 +14,7 @@ typeset -g GIT_STATUS_BEHIND="${GIT_STATUS_BEHIND:-"↓"}"
 typeset -g GIT_STATUS_AHEAD="${GIT_STATUS_AHEAD:-"↑"}"
 typeset -g GIT_STATUS_UNTRACKED="${GIT_STATUS_UNTRACKED:-"+"}"
 
+typeset -g pr_git_old
 typeset -g pr_git
 
 DEPENDENCES_ZSH+=( zpm-zsh/helpers zpm-zsh/background zpm-zsh/colors )
@@ -92,7 +93,13 @@ _git_info() {
 
 function _git_prompt() {
   if is-recursive-exist .git; then
+    pr_git_old="$pr_git"
+
     pr_git="$GIT_STATUS_PREFIX$(_git_info 2>/dev/null)$GIT_STATUS_SUFIX"
+
+    if [[ ! "$pr_git_old" == "$pr_git" ]]; then
+      zle && zle reset-prompt
+    fi
   else
     pr_git=""
   fi
