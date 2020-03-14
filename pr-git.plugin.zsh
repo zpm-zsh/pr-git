@@ -17,10 +17,8 @@ typeset -g GIT_STATUS_UNTRACKED="${GIT_STATUS_UNTRACKED:-"+"}"
 typeset -g pr_git_old
 typeset -g pr_git
 
-DEPENDENCES_ZSH+=( zpm-zsh/helpers zpm-zsh/background zpm-zsh/colors )
-
 if (( $+functions[zpm] )); then
-  zpm zpm-zsh/helpers,inline zpm-zsh/background,inline zpm-zsh/colors,inline
+  zpm zpm-zsh/helpers zpm-zsh/background zpm-zsh/colors
 fi
 
 _git_info() {
