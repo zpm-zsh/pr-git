@@ -31,7 +31,7 @@ if (( $+functions[zpm] )); then
   zpm zpm-zsh/helpers,inline zpm-zsh/background,inline zpm-zsh/colors,inline
 fi
 
-_git-function info() {
+_git_info() {
   if (( ! $+commands[git-status] )); then
     echo Please, install git-status from https://gitlab.com/cosurgi/zsh-git-cal-status-cpp
     return
@@ -101,8 +101,7 @@ _git-function info() {
 
 function _git_prompt() {
   if is-recursive-exist .git; then
-    pr_git_old="$pr_git"
-    pr_git="$GIT_STATUS_PREFIX$(_git-info 2>/dev/null)$GIT_STATUS_SUFIX"
+    pr_git="$GIT_STATUS_PREFIX$(_git_info 2>/dev/null)$GIT_STATUS_SUFIX"
   else
     pr_git=""
   fi
