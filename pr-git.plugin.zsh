@@ -1,7 +1,6 @@
 #!/usr/bin/env zsh
 0="${${ZERO:-${0:#$ZSH_ARGZERO}}:-${(%):-%N}}"
 0="${${(M)0:#/*}:-$PWD/$0}"
-base_dir=${0:h}
 
 typeset -g GIT_STATUS_PREFIX=${GIT_STATUS_PREFIX:-' '}
 typeset -g GIT_STATUS_SUFIX=${GIT_STATUS_SUFIX:-''}
@@ -17,17 +16,11 @@ typeset -g GIT_STATUS_UNTRACKED="${GIT_STATUS_UNTRACKED:-"+"}"
 typeset -g pr_git_old
 typeset -g pr_git
 
-if (( $+functions[zpm] )); then
-  zpm zpm-zsh/helpers zpm-zsh/background zpm-zsh/colors
-fi
-
-_git_info() {
+function _git_info() {
   if (( ! $+commands[git-status] )); then
     echo Please, install git-status from https://gitlab.com/cosurgi/zsh-git-cal-status-cpp
     return
   fi
-
-  # setopt extendedglob
 
   command git-status --whoami $USER --pwd-dir . --refresh-sec 3 2> /dev/null | read -A __CURRENT_GIT_STATUS
 
@@ -95,7 +88,7 @@ function _git_prompt() {
 
     pr_git="$GIT_STATUS_PREFIX$(_git_info 2>/dev/null)$GIT_STATUS_SUFIX"
 
-    if [[ ! "$pr_git_old" == "$pr_git" ]]; then
+    if [[ "$pr_git_old" != "$pr_git" ]]; then
       zle && zle reset-prompt
     fi
   else
