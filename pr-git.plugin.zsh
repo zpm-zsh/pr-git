@@ -2,16 +2,16 @@
 0="${${ZERO:-${0:#$ZSH_ARGZERO}}:-${(%):-%N}}"
 0="${${(M)0:#/*}:-$PWD/$0}"
 
-typeset -g GIT_STATUS_PREFIX=${GIT_STATUS_PREFIX:-' '}
-typeset -g GIT_STATUS_SUFIX=${GIT_STATUS_SUFIX:-''}
+: ${GIT_STATUS_PREFIX:=' '}
+: ${GIT_STATUS_SUFIX:=''}
 
-typeset -g GIT_STATUS_SYMBOL=${GIT_STATUS_SYMBOL:-''}
-typeset -g GIT_STATUS_STAGED="${GIT_STATUS_STAGED:-"→"}"
-typeset -g GIT_STATUS_CONFLICTS="${GIT_STATUS_CONFLICTS:-"≠"}"
-typeset -g GIT_STATUS_CHANGED="${GIT_STATUS_CHANGED:-"±"}"
-typeset -g GIT_STATUS_BEHIND="${GIT_STATUS_BEHIND:-"↓"}"
-typeset -g GIT_STATUS_AHEAD="${GIT_STATUS_AHEAD:-"↑"}"
-typeset -g GIT_STATUS_UNTRACKED="${GIT_STATUS_UNTRACKED:-"+"}"
+: ${GIT_STATUS_SYMBOL:=''}
+: ${GIT_STATUS_STAGED:="→"}
+: ${GIT_STATUS_CONFLICTS:="≠"}
+: ${GIT_STATUS_CHANGED:="±"}
+: ${GIT_STATUS_BEHIND:="↓"}
+: ${GIT_STATUS_AHEAD:="↑"}
+: ${GIT_STATUS_UNTRACKED:="+"}
 
 typeset -g pr_git_old
 typeset -g pr_git
