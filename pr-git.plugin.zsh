@@ -4,12 +4,12 @@
 : ${GIT_STATUS_SUFIX:=''}
 
 : ${GIT_STATUS_SYMBOL:=''}
-: ${GIT_STATUS_STAGED:="→"}
-: ${GIT_STATUS_CONFLICTS:="≠"}
-: ${GIT_STATUS_CHANGED:="±"}
-: ${GIT_STATUS_BEHIND:="↓"}
-: ${GIT_STATUS_AHEAD:="↑"}
-: ${GIT_STATUS_UNTRACKED:="+"}
+: ${GIT_STATUS_STAGED:='→'}
+: ${GIT_STATUS_CONFLICTS:='≠'}
+: ${GIT_STATUS_CHANGED:='±'}
+: ${GIT_STATUS_BEHIND:='↓'}
+: ${GIT_STATUS_AHEAD:='↑'}
+: ${GIT_STATUS_UNTRACKED:='+'}
 
 typeset -g pr_git_old
 typeset -g pr_git
@@ -32,7 +32,7 @@ function _git_info() {
   GIT_SECONDS_OR_ERROR=$__CURRENT_GIT_STATUS[8]
 
 
-  if [[ $(( $GIT_UNTRACKED +  $GIT_CHANGED + $GIT_CONFLICTS + $GIT_STAGED )) != "0" ]]; then
+  if [[ $(( $GIT_UNTRACKED + $GIT_CHANGED + $GIT_CONFLICTS + $GIT_STAGED )) != '0' ]]; then
     GIT_STATUS="%{$c[red]$c_dim%}$GIT_STATUS_SYMBOL%{$c_reset%}"
   else
     GIT_STATUS="%{$c[green]$c_dim%}$GIT_STATUS_SYMBOL%{$c_reset%}"
@@ -40,37 +40,37 @@ function _git_info() {
 
   GIT_BRANCH=" %{$c[yellow]$c_bold%}${GIT_BRANCH}%{$c_reset%}"
 
-  if [ "${GIT_AHEAD}" -eq "0" ]; then
+  if [ "${GIT_AHEAD}" -eq '0' ]; then
     GIT_AHEAD=''
   else
     GIT_AHEAD=" %{$c[blue]$c_dim$c_bold%}${GIT_STATUS_AHEAD}%{$c_reset$c[blue]$c_bold%}${GIT_AHEAD}%{$c_reset%}"
   fi
 
-  if [ "${GIT_BEHIND}" -eq "0" ]; then
+  if [ "${GIT_BEHIND}" -eq '0' ]; then
     GIT_BEHIND=''
   else
     GIT_BEHIND=" %{$c[blue]$c_dim$c_bold%}${GIT_STATUS_BEHIND}%{$c_reset$c[blue]$c_bold%}${GIT_BEHIND}%{$c_reset%}"
   fi
 
-  if [ "${GIT_STAGED}" -eq "0" ]; then
+  if [ "${GIT_STAGED}" -eq '0' ]; then
     GIT_STAGED=''
   else
     GIT_STAGED=" %{$c[cyan]$c_dim$c_bold%}${GIT_STATUS_STAGED}%{$c_reset$c[cyan]$c_bold%}${GIT_STAGED}%{$c_reset%}"
   fi
 
-  if [ "${GIT_CONFLICTS}" -eq "0" ]; then
+  if [ "${GIT_CONFLICTS}" -eq '0' ]; then
     GIT_CONFLICTS=''
   else
     GIT_CONFLICTS=" %{$c[red]$c_dim$c_bold%}${GIT_STATUS_CONFLICTS}%{$c_reset$c[red]$c_bold%}${GIT_STAGED}%{$c_reset%}"
   fi
 
-  if [ "${GIT_CHANGED}"  -eq "0" ]; then
+  if [ "${GIT_CHANGED}"  -eq '0' ]; then
     GIT_CHANGED=''
   else
     GIT_CHANGED=" %{$c[magenta]$c_dim$c_bold%}${GIT_STATUS_CHANGED}%{$c_reset$c[magenta]$c_bold%}${GIT_CHANGED}%{$c_reset%}"
   fi
 
-  if [ "${GIT_UNTRACKED}" -eq "0" ]; then
+  if [ "${GIT_UNTRACKED}" -eq '0' ]; then
     GIT_UNTRACKED=''
   else
     GIT_UNTRACKED=" %{$c[blue]$c_dim$c_bold%}${GIT_STATUS_UNTRACKED}%{$c_reset$c[blue]$c_bold%}${GIT_UNTRACKED}%{$c_reset%}"
