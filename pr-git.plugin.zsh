@@ -11,7 +11,6 @@
 : ${GIT_STATUS_AHEAD:='↑'}
 : ${GIT_STATUS_UNTRACKED:='+'}
 
-typeset -g pr_git_old
 typeset -g pr_git
 
 function _git_info() {
@@ -76,19 +75,12 @@ function _git_info() {
     GIT_UNTRACKED=" %{$c[blue]$c_dim$c_bold%}${GIT_STATUS_UNTRACKED}%{$c_reset$c[blue]$c_bold%}${GIT_UNTRACKED}%{$c_reset%}"
   fi
 
-
   echo "${GIT_STATUS}${GIT_BRANCH}${GIT_CHANGED}${GIT_UNTRACKED}${GIT_CONFLICTS}${GIT_STAGED}${GIT_AHEAD}${GIT_BEHIND}"
 }
 
 function _git_prompt() {
   if is-recursive-exist .git; then
-    pr_git_old="$pr_git"
-
     pr_git="$GIT_STATUS_PREFIX$(_git_info 2>/dev/null)$GIT_STATUS_SUFIX"
-
-    if [[ "$pr_git_old" != "$pr_git" ]]; then
-      zle && zle reset-prompt
-    fi
   else
     pr_git=""
   fi
