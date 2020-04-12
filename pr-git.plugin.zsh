@@ -32,47 +32,47 @@ function _git_info() {
 
 
   if [[ $(( $GIT_UNTRACKED + $GIT_CHANGED + $GIT_CONFLICTS + $GIT_STAGED )) != '0' ]]; then
-    GIT_STATUS="%{$c[red]$c_dim%}$GIT_STATUS_SYMBOL%{$c_reset%}"
+    GIT_STATUS="%{${c[red]}${c[dim]}%}$GIT_STATUS_SYMBOL%{${c[reset]}%}"
   else
-    GIT_STATUS="%{$c[green]$c_dim%}$GIT_STATUS_SYMBOL%{$c_reset%}"
+    GIT_STATUS="%{${c[green]}${c[dim]}%}$GIT_STATUS_SYMBOL%{${c[reset]}%}"
   fi
 
-  GIT_BRANCH=" %{$c[yellow]$c_bold%}${GIT_BRANCH}%{$c_reset%}"
+  GIT_BRANCH=" %{$c[yellow]${c[bold]}%}${GIT_BRANCH}%{${c[reset]}%}"
 
   if [ "${GIT_AHEAD}" -eq '0' ]; then
     GIT_AHEAD=''
   else
-    GIT_AHEAD=" %{$c[blue]$c_dim$c_bold%}${GIT_STATUS_AHEAD}%{$c_reset$c[blue]$c_bold%}${GIT_AHEAD}%{$c_reset%}"
+    GIT_AHEAD=" %{${c[blue]}${c[dim]}${c[bold]}%}${GIT_STATUS_AHEAD}%{${c[reset]}${c[blue]}${c[bold]}%}${GIT_AHEAD}%{${c[reset]}%}"
   fi
 
   if [ "${GIT_BEHIND}" -eq '0' ]; then
     GIT_BEHIND=''
   else
-    GIT_BEHIND=" %{$c[blue]$c_dim$c_bold%}${GIT_STATUS_BEHIND}%{$c_reset$c[blue]$c_bold%}${GIT_BEHIND}%{$c_reset%}"
+    GIT_BEHIND=" %{${c[blue]}${c[dim]}${c[bold]}%}${GIT_STATUS_BEHIND}%{${c[reset]}${c[blue]}${c[bold]}%}${GIT_BEHIND}%{${c[reset]}%}"
   fi
 
   if [ "${GIT_STAGED}" -eq '0' ]; then
     GIT_STAGED=''
   else
-    GIT_STAGED=" %{$c[cyan]$c_dim$c_bold%}${GIT_STATUS_STAGED}%{$c_reset$c[cyan]$c_bold%}${GIT_STAGED}%{$c_reset%}"
+    GIT_STAGED=" %{${c[cyan]}${c[dim]}${c[bold]}%}${GIT_STATUS_STAGED}%{${c[reset]}${c[cyan]}${c[bold]}%}${GIT_STAGED}%{${c[reset]}%}"
   fi
 
   if [ "${GIT_CONFLICTS}" -eq '0' ]; then
     GIT_CONFLICTS=''
   else
-    GIT_CONFLICTS=" %{$c[red]$c_dim$c_bold%}${GIT_STATUS_CONFLICTS}%{$c_reset$c[red]$c_bold%}${GIT_STAGED}%{$c_reset%}"
+    GIT_CONFLICTS=" %{${c[red]}${c[dim]}${c[bold]}%}${GIT_STATUS_CONFLICTS}%{${c[reset]}${c[red]}${c[bold]}%}${GIT_STAGED}%{${c[reset]}%}"
   fi
 
   if [ "${GIT_CHANGED}"  -eq '0' ]; then
     GIT_CHANGED=''
   else
-    GIT_CHANGED=" %{$c[magenta]$c_dim$c_bold%}${GIT_STATUS_CHANGED}%{$c_reset$c[magenta]$c_bold%}${GIT_CHANGED}%{$c_reset%}"
+    GIT_CHANGED=" %{${c[magenta]}${c[dim]}${c[bold]}%}${GIT_STATUS_CHANGED}%{${c[reset]}${c[magenta]}${c[bold]}%}${GIT_CHANGED}%{${c[reset]}%}"
   fi
 
   if [ "${GIT_UNTRACKED}" -eq '0' ]; then
     GIT_UNTRACKED=''
   else
-    GIT_UNTRACKED=" %{$c[blue]$c_dim$c_bold%}${GIT_STATUS_UNTRACKED}%{$c_reset$c[blue]$c_bold%}${GIT_UNTRACKED}%{$c_reset%}"
+    GIT_UNTRACKED=" %{${c[blue]}${c[dim]}${c[bold]}%}${GIT_STATUS_UNTRACKED}%{${c[reset]}${c[blue]}${c[bold]}%}${GIT_UNTRACKED}%{${c[reset]}%}"
   fi
 
   echo "${GIT_STATUS}${GIT_BRANCH}${GIT_CHANGED}${GIT_UNTRACKED}${GIT_CONFLICTS}${GIT_STAGED}${GIT_AHEAD}${GIT_BEHIND}"
