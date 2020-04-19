@@ -14,11 +14,6 @@
 typeset -g pr_git
 
 function _git_info() {
-  if (( ! $+commands[git-status] )); then
-    echo Please, install git-status from https://gitlab.com/cosurgi/zsh-git-cal-status-cpp
-    return
-  fi
-
   command git-status --whoami $USER --pwd-dir . --refresh-sec 3 2> /dev/null | read -A __CURRENT_GIT_STATUS
 
   GIT_BRANCH=$__CURRENT_GIT_STATUS[1]
@@ -86,6 +81,10 @@ function _git_prompt() {
   fi
 }
 
-autoload -Uz add-zsh-hook
-add-zsh-hook precmd _git_prompt
-_git_prompt
+if (( ! $+commands[git-status] )); then
+  echo Please, install git-status from https://gitlab.com/cosurgi/zsh-git-cal-status-cpp
+else
+  autoload -Uz add-zsh-hook
+  add-zsh-hook precmd _git_prompt
+  _git_prompt
+fi

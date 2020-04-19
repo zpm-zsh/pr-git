@@ -17,9 +17,16 @@ This plugin made to be fast. It runs in background and update information only i
 
 ### Binary deps
 
-Please, compile [zsh-git-cal-status-cpp](https://gitlab.com/cosurgi/zsh-git-cal-status-cpp), and put in `$PATH` as `git-status`. This plugin can automaticaly download and complie this plugin, but depends on `boost` lib.
+Please, compile `git-status.cpp` from [zsh-git-cal-status-cpp](https://gitlab.com/cosurgi/zsh-git-cal-status-cpp), and put in `$PATH` as `git-status`. 
 
-### This plugin depends on [zsh-helpres](https://github.com/zpm-zsh/helpers), [zsh-colors](https://github.com/zpm-zsh/colors) and [zsh-background](https://github.com/zpm-zsh/background)
+```sh
+git clone https://gitlab.com/cosurgi/zsh-git-cal-status-cpp
+cd zsh-git-cal-status-cpp
+g++ -Ofast git-status.cpp -o git-status -std=c++14 -Wall -Wextra -Wpedantic -Wshadow -Wenum-compare -Wunreachable-code -Werror=narrowing -Werror=return-type -lboost_program_options -static
+cp git-status ~/.bin # Or copy to another dir from $PATH
+```
+
+### This plugin depends on [zsh-colors](https://github.com/zpm-zsh/colors) and [zsh-background](https://github.com/zpm-zsh/background)
 
 If you don't use [zpm](https://github.com/zpm-zsh/zpm), install it manually and activate it before this plugin. 
 If you use zpm you don’t need to do anything
