@@ -3,7 +3,7 @@
 : ${GIT_STATUS_PREFIX:=' '}
 : ${GIT_STATUS_SUFIX:=''}
 
-: ${GIT_STATUS_SYMBOL:=''}
+: ${GIT_STATUS_SYMBOL:=''}
 : ${GIT_STATUS_STAGED:='→'}
 : ${GIT_STATUS_CONFLICTS:='≠'}
 : ${GIT_STATUS_CHANGED:='±'}
@@ -11,7 +11,7 @@
 : ${GIT_STATUS_AHEAD:='↑'}
 : ${GIT_STATUS_UNTRACKED:='+'}
 
-typeset -g pr_git
+typeset -g pr_git='git-status missing'
 
 function _git_info() {
   command git-status --whoami $USER --pwd-dir . --refresh-sec 3 2> /dev/null | read -A __CURRENT_GIT_STATUS
@@ -81,9 +81,7 @@ function _git_prompt() {
   fi
 }
 
-if (( ! $+commands[git-status] )); then
-  echo Please, install git-status from https://gitlab.com/cosurgi/zsh-git-cal-status-cpp
-else
+if (( $+commands[git-status] )); then
   autoload -Uz add-zsh-hook
   add-zsh-hook precmd _git_prompt
   _git_prompt
