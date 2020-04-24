@@ -11,7 +11,7 @@
 : ${GIT_STATUS_AHEAD:='↑'}
 : ${GIT_STATUS_UNTRACKED:='+'}
 
-typeset -g pr_git="${GIT_STATUS_PREFIX}git-status missing${GIT_STATUS_SUFIX}"
+typeset -g pr_git=''
 
 function _git_info() {
   command git-status --whoami $USER --pwd-dir . --refresh-sec 3 2> /dev/null | read -A __CURRENT_GIT_STATUS
