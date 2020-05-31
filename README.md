@@ -26,7 +26,7 @@ g++ -Ofast git-status.cpp -o git-status -std=c++14 -Wall -Wextra -Wpedantic -Wsh
 cp git-status ~/.bin # Or copy to another dir from $PATH
 ```
 
-### This plugin depends on [zsh-colors](https://github.com/zpm-zsh/colors) and [zsh-background](https://github.com/zpm-zsh/background)
+### This plugin depends on [zsh-colors](https://github.com/zpm-zsh/colors).
 
 If you don't use [zpm](https://github.com/zpm-zsh/zpm), install it manually and activate it before this plugin. 
 If you use zpm you don’t need to do anything
