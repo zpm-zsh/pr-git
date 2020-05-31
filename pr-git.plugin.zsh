@@ -1,4 +1,11 @@
-#!/usr/bin/env zsh
+# Standarized ZSH polyfills, following:
+# https://github.com/zdharma/Zsh-100-Commits-Club/blob/master/Zsh-Plugin-Standard.adoc
+0="${${ZERO:-${0:#$ZSH_ARGZERO}}:-${(%):-%N}}"
+0="${${(M)0:#/*}:-$PWD/$0}"
+
+if [[ $PMSPEC != *f* ]] {
+  fpath+=( "${0:h}/functions" )
+}
 
 : ${GIT_STATUS_PREFIX:=' '}
 : ${GIT_STATUS_SUFIX:=''}
@@ -10,10 +17,6 @@
 : ${GIT_STATUS_BEHIND:='↓'}
 : ${GIT_STATUS_AHEAD:='↑'}
 : ${GIT_STATUS_UNTRACKED:='+'}
-
-if [[ $PMSPEC != *f* ]] {
-  fpath+=( "${0:h}/functions" )
-}
 
 autoload -Uz git-prompt
 
