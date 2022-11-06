@@ -10,7 +10,6 @@ if [[ $PMSPEC != *f* ]] {
 : ${GIT_STATUS_PREFIX:=' '}
 : ${GIT_STATUS_SUFIX:=''}
 
-: ${GIT_STATUS_SYMBOL:=''}
 : ${GIT_STATUS_STAGED:='→'}
 : ${GIT_STATUS_CONFLICTS:='≠'}
 : ${GIT_STATUS_CHANGED:='±'}

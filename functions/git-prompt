@@ -11,14 +11,12 @@ GIT_CHANGED=$__CURRENT_GIT_STATUS[6]
 GIT_UNTRACKED=$__CURRENT_GIT_STATUS[7]
 GIT_SECONDS_OR_ERROR=$__CURRENT_GIT_STATUS[8]
 
-
 if [[ $(( $GIT_UNTRACKED + $GIT_CHANGED + $GIT_CONFLICTS + $GIT_STAGED )) != '0' ]]; then
-  GIT_STATUS="%{${c[red]}${c[dim]}%}$GIT_STATUS_SYMBOL%{${c[reset]}%}"
+  GIT_BRANCH="%{$c[magenta]${c[bold]}%}${GIT_BRANCH}%{${c[reset]}%}"
 else
-  GIT_STATUS="%{${c[green]}${c[dim]}%}$GIT_STATUS_SYMBOL%{${c[reset]}%}"
+  GIT_BRANCH="%{$c[yellow]${c[bold]}%}${GIT_BRANCH}%{${c[reset]}%}"
 fi
 
-GIT_BRANCH=" %{$c[yellow]${c[bold]}%}${GIT_BRANCH}%{${c[reset]}%}"
 
 if [ "${GIT_AHEAD}" -eq '0' ]; then
   GIT_AHEAD=''
@@ -47,7 +45,7 @@ fi
 if [ "${GIT_CHANGED}"  -eq '0' ]; then
   GIT_CHANGED=''
 else
-  GIT_CHANGED=" %{${c[magenta]}${c[dim]}${c[bold]}%}${GIT_STATUS_CHANGED}%{${c[reset]}${c[magenta]}${c[bold]}%}${GIT_CHANGED}%{${c[reset]}%}"
+  GIT_CHANGED=" %{${c[yellow]}${c[dim]}${c[bold]}%}${GIT_STATUS_CHANGED}%{${c[reset]}${c[yellow]}${c[bold]}%}${GIT_CHANGED}%{${c[reset]}%}"
 fi
 
 if [ "${GIT_UNTRACKED}" -eq '0' ]; then
@@ -56,4 +54,4 @@ else
   GIT_UNTRACKED=" %{${c[blue]}${c[dim]}${c[bold]}%}${GIT_STATUS_UNTRACKED}%{${c[reset]}${c[blue]}${c[bold]}%}${GIT_UNTRACKED}%{${c[reset]}%}"
 fi
 
-echo "${GIT_STATUS}${GIT_BRANCH}${GIT_CHANGED}${GIT_UNTRACKED}${GIT_CONFLICTS}${GIT_STAGED}${GIT_AHEAD}${GIT_BEHIND}"
+echo "${GIT_BRANCH}${GIT_CHANGED}${GIT_UNTRACKED}${GIT_CONFLICTS}${GIT_STAGED}${GIT_AHEAD}${GIT_BEHIND}"
