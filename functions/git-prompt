@@ -51,7 +51,7 @@ fi
 if [ "${GIT_UNTRACKED}" -eq '0' ]; then
   GIT_UNTRACKED=''
 else
-  GIT_UNTRACKED=" %{${c[blue]}${c[dim]}${c[bold]}%}${GIT_STATUS_UNTRACKED}%{${c[reset]}${c[blue]}${c[bold]}%}${GIT_UNTRACKED}%{${c[reset]}%}"
+  GIT_UNTRACKED=" %{${c[springgreen]}${c[dim]}${c[bold]}%}${GIT_STATUS_UNTRACKED}%{${c[reset]}${c[springgreen]}${c[bold]}%}${GIT_UNTRACKED}%{${c[reset]}%}"
 fi
 
 echo "${GIT_BRANCH}${GIT_CHANGED}${GIT_UNTRACKED}${GIT_CONFLICTS}${GIT_STAGED}${GIT_AHEAD}${GIT_BEHIND}"
