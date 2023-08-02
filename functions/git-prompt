@@ -21,37 +21,37 @@ fi
 if [ "${GIT_AHEAD}" -eq '0' ]; then
   GIT_AHEAD=''
 else
-  GIT_AHEAD=" %{${c[blue]}${c[dim]}${c[bold]}%}${GIT_STATUS_AHEAD}%{${c[reset]}${c[blue]}${c[bold]}%}${GIT_AHEAD}%{${c[reset]}%}"
+  GIT_AHEAD=" %{${c[blue]}${c[dim]}${c[bold]}%}${PR_GIT_STATUS_AHEAD}%{${c[reset]}${c[blue]}${c[bold]}%}${GIT_AHEAD}%{${c[reset]}%}"
 fi
 
 if [ "${GIT_BEHIND}" -eq '0' ]; then
   GIT_BEHIND=''
 else
-  GIT_BEHIND=" %{${c[blue]}${c[dim]}${c[bold]}%}${GIT_STATUS_BEHIND}%{${c[reset]}${c[blue]}${c[bold]}%}${GIT_BEHIND}%{${c[reset]}%}"
+  GIT_BEHIND=" %{${c[blue]}${c[dim]}${c[bold]}%}${PR_GIT_STATUS_BEHIND}%{${c[reset]}${c[blue]}${c[bold]}%}${GIT_BEHIND}%{${c[reset]}%}"
 fi
 
 if [ "${GIT_STAGED}" -eq '0' ]; then
   GIT_STAGED=''
 else
-  GIT_STAGED=" %{${c[cyan]}${c[dim]}${c[bold]}%}${GIT_STATUS_STAGED}%{${c[reset]}${c[cyan]}${c[bold]}%}${GIT_STAGED}%{${c[reset]}%}"
+  GIT_STAGED=" %{${c[cyan]}${c[dim]}${c[bold]}%}${PR_GIT_STATUS_STAGED}%{${c[reset]}${c[cyan]}${c[bold]}%}${GIT_STAGED}%{${c[reset]}%}"
 fi
 
 if [ "${GIT_CONFLICTS}" -eq '0' ]; then
   GIT_CONFLICTS=''
 else
-  GIT_CONFLICTS=" %{${c[red]}${c[dim]}${c[bold]}%}${GIT_STATUS_CONFLICTS}%{${c[reset]}${c[red]}${c[bold]}%}${GIT_STAGED}%{${c[reset]}%}"
+  GIT_CONFLICTS=" %{${c[red]}${c[dim]}${c[bold]}%}${PR_GIT_STATUS_CONFLICTS}%{${c[reset]}${c[red]}${c[bold]}%}${GIT_STAGED}%{${c[reset]}%}"
 fi
 
 if [ "${GIT_CHANGED}"  -eq '0' ]; then
   GIT_CHANGED=''
 else
-  GIT_CHANGED=" %{${c[yellow]}${c[dim]}${c[bold]}%}${GIT_STATUS_CHANGED}%{${c[reset]}${c[yellow]}${c[bold]}%}${GIT_CHANGED}%{${c[reset]}%}"
+  GIT_CHANGED=" %{${c[yellow]}${c[dim]}${c[bold]}%}${PR_GIT_STATUS_CHANGED}%{${c[reset]}${c[yellow]}${c[bold]}%}${GIT_CHANGED}%{${c[reset]}%}"
 fi
 
 if [ "${GIT_UNTRACKED}" -eq '0' ]; then
   GIT_UNTRACKED=''
 else
-  GIT_UNTRACKED=" %{${c[springgreen]}${c[dim]}${c[bold]}%}${GIT_STATUS_UNTRACKED}%{${c[reset]}${c[springgreen]}${c[bold]}%}${GIT_UNTRACKED}%{${c[reset]}%}"
+  GIT_UNTRACKED=" %{${c[springgreen]}${c[dim]}${c[bold]}%}${PR_GIT_STATUS_UNTRACKED}%{${c[reset]}${c[springgreen]}${c[bold]}%}${GIT_UNTRACKED}%{${c[reset]}%}"
 fi
 
 echo "${GIT_BRANCH}${GIT_CHANGED}${GIT_UNTRACKED}${GIT_CONFLICTS}${GIT_STAGED}${GIT_AHEAD}${GIT_BEHIND}"

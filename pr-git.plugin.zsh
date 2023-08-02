@@ -7,12 +7,12 @@ if [[ $PMSPEC != *f* ]] {
   fpath+=( "${0:h}/functions" )
 }
 
-: ${GIT_STATUS_STAGED:='→'}
-: ${GIT_STATUS_CONFLICTS:='≠'}
-: ${GIT_STATUS_CHANGED:='±'}
-: ${GIT_STATUS_BEHIND:='↓'}
-: ${GIT_STATUS_AHEAD:='↑'}
-: ${GIT_STATUS_UNTRACKED:='+'}
+: ${PR_GIT_STATUS_STAGED:='→'}
+: ${PR_GIT_STATUS_CONFLICTS:='≠'}
+: ${PR_GIT_STATUS_CHANGED:='±'}
+: ${PR_GIT_STATUS_BEHIND:='↓'}
+: ${PR_GIT_STATUS_AHEAD:='↑'}
+: ${PR_GIT_STATUS_UNTRACKED:='+'}
 
 autoload -Uz git-prompt
 
