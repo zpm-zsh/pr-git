@@ -11,12 +11,23 @@ GIT_CHANGED=$__CURRENT_GIT_STATUS[6]
 GIT_UNTRACKED=$__CURRENT_GIT_STATUS[7]
 GIT_SECONDS_OR_ERROR=$__CURRENT_GIT_STATUS[8]
 
-if [[ $(( $GIT_UNTRACKED + $GIT_CHANGED + $GIT_CONFLICTS + $GIT_STAGED )) != '0' ]]; then
+local is_dirty=$(( $GIT_UNTRACKED + $GIT_CHANGED + $GIT_CONFLICTS + $GIT_STAGED ))
+
+if [[ $is_dirty != '0' ]]; then
   GIT_BRANCH="%{$c[magenta]${c[bold]}%}${GIT_BRANCH}%{${c[reset]}%}"
 else
   GIT_BRANCH="%{$c[yellow]${c[bold]}%}${GIT_BRANCH}%{${c[reset]}%}"
 fi
 
+# Short mode: only branch name with dirty indicator
+if [[ $1 == 'short' ]]; then
+  local dirty_mark=''
+  if [[ $is_dirty != '0' ]]; then
+    dirty_mark="%{${c[red]}${c[bold]}%}*%{${c[reset]}%}"
+  fi
+  echo "${GIT_BRANCH}${dirty_mark}"
+  return
+fi
 
 if [ "${GIT_AHEAD}" -eq '0' ]; then
   GIT_AHEAD=''

@@ -19,8 +19,17 @@ autoload -Uz git-prompt
 typeset -g pr_git=''
 
 function _git_prompt() {
+  # Skip rendering in narrow terminals; guard against unset $COLUMNS.
+  if (( ${COLUMNS:-0} < 60 )); then
+    return 0
+  fi
+
   if is-recursive-exist .git; then
-    pr_git=" $(git-prompt 2>/dev/null)"
+    if (( ${COLUMNS:-0} < 80 )); then
+      pr_git=" $(git-prompt short 2>/dev/null)"
+    else
+      pr_git=" $(git-prompt 2>/dev/null)"
+    fi
   else
     pr_git=""
   fi
